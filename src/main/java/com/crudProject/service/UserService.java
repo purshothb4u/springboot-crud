@@ -44,4 +44,9 @@ public class UserService {
 		}
 	}
 	
+	public List<User> findByRoleCustom(String role) {
+		return rep.findByRole(role);
+	}
+	
+	
 }

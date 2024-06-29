@@ -47,4 +47,8 @@ public class UserController {
 		return ser.updateUser(id, user);
 	}
 	
+	@GetMapping("getbyrole/{role}")
+	public List<User> findByRoleCustomeQuery(@PathVariable String role) {
+		return ser.findByRoleCustom(role);
+	}
 }
