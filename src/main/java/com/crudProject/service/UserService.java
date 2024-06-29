@@ -5,6 +5,7 @@ import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.crudProject.exception.UserNotFoundException;
 import com.crudProject.model.User;
 import com.crudProject.repository.UserRepository;
 
@@ -26,10 +27,19 @@ public class UserService {
 		return rep.findById(id);
 	}
 	
-	public String deleteById(Integer id) {
-		 rep.deleteById(id);
-		 return "Deleted Successfully Id = " + id;
-	}
+//	public String deleteById(Integer id) {
+//		 rep.deleteById(id);
+//		 return "Deleted Successfully Id = " + id;
+//	}
+	
+	  public void deleteById(Integer id) {
+	        Optional<User> user = rep.findById(id);
+	        if (user.isPresent()) {
+	            rep.deleteById(id);
+	        } else {
+	            throw new UserNotFoundException("User not found with id: " + id);
+	        }
+	    }
 	
 	public User updateUser(Integer id, User user) {
 		Optional<User> userdata = rep.findById(id);
@@ -40,7 +50,7 @@ public class UserService {
 			return rep.save(u);
 		}
 		else {
-			return null;
+			 throw new UserNotFoundException("User not found with id: " + id);
 		}
 	}
 	
