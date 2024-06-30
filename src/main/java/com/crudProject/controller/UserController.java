@@ -4,6 +4,7 @@ import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,15 +18,18 @@ import com.crudProject.exception.UserNotFoundException;
 import com.crudProject.model.User;
 import com.crudProject.service.UserService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/crud")
+@Validated
 public class UserController {
 
 	@Autowired
 	private UserService ser;
 	
 	@PostMapping("/save")
-	public User save(@RequestBody User user) {
+	public User save(@Valid @RequestBody User user) {
 		return ser.saveUser(user);
 	}
 		
@@ -56,12 +60,12 @@ public class UserController {
 	        return ResponseEntity.ok("Deleted Successfully Id = " + id);
 	    }
 	
-	@PutMapping("update/{id}")
-	public User putMethodName(@PathVariable Integer id, @RequestBody User user) {
+	@PutMapping("/update/{id}")
+	public User updateUser(@PathVariable Integer id, @RequestBody User user) {
 		return ser.updateUser(id, user);
 	}
 	
-	@GetMapping("getbyrole/{role}")
+	@GetMapping("/getbyrole/{role}")
 	public List<User> findByRoleCustomeQuery(@PathVariable String role) {
 		return ser.findByRoleCustom(role);
 	}

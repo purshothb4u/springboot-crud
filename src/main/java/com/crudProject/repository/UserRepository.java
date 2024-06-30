@@ -13,6 +13,6 @@ import com.crudProject.model.User;
 public interface UserRepository extends JpaRepository<User, Integer>{
 	
 	@Query(value = "SELECT u FROM User u where role= :r")
-	public List<User> findByRole(@Param("r") String roleeeee );
+	public List<User> findByRole(@Param("r") String role );
 
 }
